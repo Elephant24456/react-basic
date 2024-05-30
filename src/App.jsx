@@ -1,35 +1,82 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handlePasswordConfirmChange = (e) => {
+    setPasswordConfirm(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    event.preventDefault();
+    if (!email.trim()) {
+      alert("이메일을 입력해 주세요.");
+      return;
+    }
+
+    if (!password.trim()) {
+      alert("비밀번호를 입력해 주세요.");
+      return;
+    }
+
+    if (password.length < 8) {
+      alert("8자 이상 입력해 주세여.");
+      return;
+    }
+
+    if (password !== passwordConfirm) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+    
+    alert(
+      `회원가입 성공! 당신의 이메일은 ${email} & 비밀번호는 ${password}입니다.`
+    );
+  };
 
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <label htmlFor="email">이메일:</label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={handleEmailChange}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div>
+        <label htmlFor="password">비밀번호:</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <div>
+        <label htmlFor="passwordConfirm">비밀번호 확인:</label>
+        <input
+          type="password"
+          id="passwordConfirm"
+          value={passwordConfirm}
+          onChange={handlePasswordConfirmChange}
+        />
+      </div>
+      <button type="submit">회원가입</button>
+    </form>
+  );
 }
 
-export default App
+export default App;
